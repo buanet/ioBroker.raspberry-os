@@ -1,4 +1,4 @@
-# Raspberry OS Image for ioBroker
+# Raspberry OS Image with ioBroker
 
 This code is used to auto generate Raspberry OS Images, preconfigured and including ioBroker IoT platform.
 
