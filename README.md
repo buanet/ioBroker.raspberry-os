@@ -6,8 +6,11 @@ More information coming soon.
 
 ## Changelog
 
-### v0.0.1 (2021-01-27)
-* project started / initial release
+### v0.0.2 (2021-02-01)
+* changed memory split
+* changed boot to run level 3
+* v0.0.1 (2021-01-27)
+  * project started / initial release
 
 ## License
 
