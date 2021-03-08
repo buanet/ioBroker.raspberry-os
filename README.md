@@ -1,16 +1,51 @@
-# Raspberry OS Image with ioBroker
+# Build a Raspberry OS Image for ioBroker
 
-This code is used to auto generate Raspberry OS Images, preconfigured and including ioBroker IoT platform.
+This script is used to auto generate preconfigured Raspberry OS Images for ioBroker IoT platform. For more details about ioBroker and the download of the last image see: [iobroker.net](https://www.iobroker.net/).
 
-More information coming soon.
+This build script uses the official Raspberry Pi OS build script from https://github.com/RPi-Distro/pi-gen. It takes the stages for the default Lite Image and adds a custom stage for setting up ioBroker.
+
+## How to use
+You can use this script to build your own ioBroker RaspberryPi OS image from source.
+
+### Prerequisites
+This script is made for running on a Linux Platform like Debian or Ubuntu.
+Make sure you have Docker up and running. 
+
+Clone the code to your local system:
+
+```
+git clone https://github.com/buanet/ioBroker.raspberry-os
+```
+
+### Starting build
+Start the build process (from inside the cloned ioBroker.raspberry-os folder):
+```
+sudo ./build-iobrokerpi.sh
+```
+The script will download pi-gen source and start building.
+
+After success you will find your Image in ```./pi-gen/deploy/```.
+
+### Cleanup
+
+Cleanup your workspace with the included cleanup script:
+```
+sudo ./cleanup.sh
+```
+
+## Configuration
+
+You can configure settings like locales, default User and more by changing the ```config``` file. For details see the [pi-gen readme.md](https://github.com/RPi-Distro/pi-gen/blob/master/README.md).
 
 ## Changelog
 
-### v0.0.2 (2021-02-01)
-* changed memory split
-* changed boot target
+### v1.0.0 (2021-03-08)
+* added some documentation
+* v0.0.2 (2021-02-01)
+  * changed memory split
+  * changed boot target
 * v0.0.1 (2021-01-27)
-  * project started / initial release
+    * project started / initial release
 
 ## License
 
