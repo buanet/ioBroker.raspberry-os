@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script will run the first time the raspberry pi boots.
-# It is ran as root.
+# It runs as root.
 
 echo '>>> Starting firstboot.sh'
 
