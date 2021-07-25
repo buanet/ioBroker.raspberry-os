@@ -17,6 +17,18 @@ jobs:
           repository: 'buanet/ioBroker.raspberry-os'
           ref: 'main'
           
+      - name: Preparing files
+        run: |
+          git clone https://github.com/RPi-Distro/pi-gen
+          cp ./config pi-gen/config
+          cp -R ./stage-iobroker pi-gen/stage-iobroker
+          chmod -R +x pi-gen
+          cd ./pi-gen
+          touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
+          touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
+          rm ./stage4/EXPORT* ./stage5/EXPORT*
+          ls -al
+          
       - name: Testing
         run: |
           ls -al
