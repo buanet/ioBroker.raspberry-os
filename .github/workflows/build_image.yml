@@ -36,7 +36,7 @@ jobs:
       - name: Build image
         run: |
           cd ./pi-gen
-          ./build-docker.sh
+          ./build.sh
           ls -al
           cd ./deploy
           ls -al
