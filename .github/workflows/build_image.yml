@@ -16,3 +16,7 @@ jobs:
         with:
           repository: 'buanet/ioBroker.raspberry-os'
           ref: 'main'
+          
+      - name: Testing
+        run: |
+          ls -al
