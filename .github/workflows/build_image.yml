@@ -1,0 +1,18 @@
+# Github action to build Raspberry Pi image
+
+name: Build Raspberry Pi image
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  bulid_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2.3.4
+        with:
+          repository: 'buanet/ioBroker.raspberry-os'
+          ref: 'main'
