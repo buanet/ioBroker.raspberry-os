@@ -16,6 +16,9 @@ jobs:
         with:
           repository: 'buanet/ioBroker.raspberry-os'
           ref: 'main'
+        
+      - name: Install prerequisites
+        run: sudo apt-get update && sudo apt-get install lftp
           
       - name: Preparing build
         run: |
