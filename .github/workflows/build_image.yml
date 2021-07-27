@@ -37,12 +37,61 @@ jobs:
         run: |
           cd ./pi-gen
           ./build-docker.sh
-          ls -al
-          cd ./deploy
-          ls -al
           
-      - name: Upload
+      - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: deploy
           path: pi-gen/deploy/
+          
+      - name: Deploy image to smarthome.buanet.de
+        run: |
+          echo "Getting image file information..."
+          FILEPATH=$(find ./pi-gen/deploy/ -name '*.zip')
+          FILENAME=$(echo $FILEPATH | cut -d'/' -f4-)
+          echo "Done."
+          echo ''
+          echo "Generating info.txt..."
+          echo -n $FILENAME > info.txt
+          echo "Done."
+          echo ''
+          echo "Getting information about current published image file from smarthome.buanet.de..."
+          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
+          set ftp:ssl-force yes
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate no
+          set xfer:clobber on
+          cd /latest-rpios-iobroker/
+          get info.txt -o info.old.txt
+          exit
+          EOF
+          FILENAMEOLD=$(cat info.old.txt)
+          echo "Name of current published image is $FILENAMEOLD."
+          echo "Done."
+          echo ''
+          echo "Pushing new image and info file to smarthome.buanet.de..."
+          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
+          set ftp:ssl-force yes
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate no
+          cd /latest-rpios-iobroker/
+          put $FILEPATH
+          put info.txt
+          exit
+          EOF
+          echo "Done."
+          echo ''
+          echo "Deleting old files from smarthome.buanet.de..."
+          if [ $FILENAME != $FILENAMEOLD ]
+            then
+            lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
+            set ftp:ssl-force yes
+            set ftp:ssl-protect-data true
+            set ssl:verify-certificate no
+            cd /latest-rpios-iobroker/
+            rm $FILENAMEOLD | true
+            exit
+          EOF
+          fi
+          echo "Done."
+          echo ''
