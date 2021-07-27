@@ -36,7 +36,13 @@ jobs:
       - name: Build image
         run: |
           cd ./pi-gen
-          ./build.sh
+          ./build-docker.sh
           ls -al
           cd ./deploy
           ls -al
+          
+      - name: Upload
+        uses: actions/upload-artifact@v2
+          with:
+            name: deploy
+            path: pi-gen/deploy/
