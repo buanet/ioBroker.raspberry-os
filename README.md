@@ -1,4 +1,4 @@
-# Raspberry OS Image with ioBroker
+# Raspberry OS image with ioBroker
 
 [![Source](https://img.shields.io/badge/source-github-blue)](https://github.com/buanet/ioBroker.raspberry-os)
 [![Release](https://img.shields.io/github/v/release/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/releases)
@@ -11,12 +11,13 @@ This repo is used to auto generate preconfigured Raspberry OS Images for ioBroke
 
 This build uses the official Raspberry Pi OS build script from https://github.com/RPi-Distro/pi-gen. It takes the stages for the default lite image and adds a custom stage for setting up ioBroker.
 
-## How to use
-You can use this script to build your own ioBroker RaspberryPi OS image from source. 
+## Build your own Raspberry OS image
+Of course you can use this code to locally build your ioBroker RaspberryPi OS image from scratch.
+This is how it works.
 
 ### Prerequisites
 This script is made for running on a Linux Platform like Debian or Ubuntu.
-Make sure you have Docker up and running. 
+As this build script is using Docker, make sure you have it up and running on your machine. 
 
 Clone the code to your local system:
 
@@ -29,20 +30,20 @@ Start the build process (from inside the cloned ioBroker.raspberry-os folder):
 ```
 sudo ./build-iobrokerpi.sh
 ```
-The script will download pi-gen source and start building.
+The script will download pi-gen source and start building automatically.
+
+Depending on your environment, the process can take some (more) time.
 
 After success you will find your Image in ```./pi-gen/deploy/```.
 
 ### Cleanup
-
-Cleanup your workspace with the included cleanup script:
+Cleanup your workspace with the included cleanup script. It will delete the pi-gen source and the used docker container.
 ```
 sudo ./cleanup.sh
 ```
 
 ### Configuration
-
-You can configure settings like locales, default User and more by changing the ```config``` file. For details see the [pi-gen readme.md](https://github.com/RPi-Distro/pi-gen/blob/master/README.md).
+You can configure settings like locales, default User and more by editing the ```config``` file. For more details see the original [pi-gen readme.md](https://github.com/RPi-Distro/pi-gen/blob/master/README.md).
 
 ## Changelog
 
