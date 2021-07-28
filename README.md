@@ -49,7 +49,7 @@ You can configure settings like locales, default User and more by changing the `
 ## Changelog
 
 ### v1.1.0 (2021-07-27)
-* moved build process to github actions
+* added automated build process with github actions
 * default user is now "pi"
 
 ### v1.0.0 (2021-03-08)
