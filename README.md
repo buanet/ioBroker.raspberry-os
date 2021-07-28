@@ -11,7 +11,6 @@ This repo is used to auto generate preconfigured Raspberry OS Images for ioBroke
 
 This build uses the official Raspberry Pi OS build script from https://github.com/RPi-Distro/pi-gen. It takes the stages for the default lite image and adds a custom stage for setting up ioBroker.
 
-***
 ## How to use
 You can use this script to build your own ioBroker RaspberryPi OS image from source. 
 
@@ -45,7 +44,6 @@ sudo ./cleanup.sh
 
 You can configure settings like locales, default User and more by changing the ```config``` file. For details see the [pi-gen readme.md](https://github.com/RPi-Distro/pi-gen/blob/master/README.md).
 
-***
 ## Changelog
 
 ### v1.1.0 (2021-07-27)
@@ -60,7 +58,6 @@ You can configure settings like locales, default User and more by changing the `
 * v0.0.1 (2021-01-27)
     * project started / initial release
 
-***
 ## License
 
 MIT License
@@ -85,7 +82,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-***
 ## Credits
 
 This project uses the [official RPi-Distro/pi-gen](https://github.com/RPi-Distro/pi-gen) and is inspired by the [Honey-Pi project](https://github.com/Honey-Pi/HoneyPi-Build-Raspbian).
