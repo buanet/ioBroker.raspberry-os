@@ -1,9 +1,8 @@
 # Raspberry OS image with ioBroker
 
-[![Source](https://img.shields.io/badge/source-github-blue)](https://github.com/buanet/ioBroker.raspberry-os)
 [![Release](https://img.shields.io/github/v/release/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/releases)
 [![Github Issues](https://img.shields.io/github/issues/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/issues)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/buanet/ioBroker.raspberry-os/Build%20Raspberry%20Pi%20image)](https://github.com/buanet/ioBroker.raspberry-os/actions/workflows/docker_build_main_image.yml)<br>
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/buanet/ioBroker.raspberry-os/Build%20Raspberry%20Pi%20image)](https://github.com/buanet/ioBroker.raspberry-os/actions/workflows/build_image.yml)<br>
 [![License](https://img.shields.io/github/license/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/blob/master/LICENSE.md)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue)](https://paypal.me/buanet)
 
