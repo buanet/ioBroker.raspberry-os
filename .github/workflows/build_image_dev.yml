@@ -1,4 +1,4 @@
-# Github action to build Raspberry Pi image
+# Github action to build Raspberry Pi image from dev branch
 
 name: Build Raspberry Pi image (dev)
 
