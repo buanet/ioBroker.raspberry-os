@@ -101,3 +101,19 @@ jobs:
           fi
           echo "Done."
           echo ''
+
+      - name: Deploy image to iobroker.net
+        run: |
+          echo "Getting image file information..."
+          FILEPATH=$(find ./pi-gen/deploy/ -name '*.zip')
+          FILENAME=$(echo $FILEPATH | cut -d'/' -f4-)
+          echo "Done."
+          echo ''
+          echo "Pushing new image to iobroker.net..."
+          lftp -u ${{ secrets.FTP1_USER }},${{ secrets.FTP1_PASS }} ftp://${{ secrets.FTP1_HOST }}:${{ secrets.FTP1_PORT }} <<EOF
+          set sftp:auto-confirm yes
+          put $FILEPATH -o ioBroker_Image_RPi_v1.0.0_latest.zip
+          exit
+          EOF
+          echo "Done."
+          echo ''
