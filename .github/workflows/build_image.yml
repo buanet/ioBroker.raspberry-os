@@ -62,42 +62,53 @@ jobs:
           echo "Done."
           echo ''
           echo "Getting information about current published image file from smarthome.buanet.de..."
-          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
+          lftp -v -c "
+            set net:timeout 5
+            set net:max-retries 3
+            set net:reconnect-interval-base 5
             set ftp:ssl-force yes
             set ftp:ssl-protect-data true
             set ssl:verify-certificate no
             set xfer:clobber on
-            cd /latest-rpios-iobroker/
-            get info.txt -o info.old.txt
+            open -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }}
+            get ./latest-rpios-iobroker/info.txt -o info.old.txt
             exit
-          EOF
+          "
           FILENAMEOLD=$(cat info.old.txt)
           echo "Name of current published image is $FILENAMEOLD."
           echo "Done."
           echo ''
           echo "Pushing new image and info file to smarthome.buanet.de..."
-          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
+          lftp -v -c "
+            set net:timeout 5
+            set net:max-retries 3
+            set net:reconnect-interval-base 5
             set ftp:ssl-force yes
             set ftp:ssl-protect-data true
             set ssl:verify-certificate no
+            open -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }}
             cd /latest-rpios-iobroker/
             put $FILEPATH
             put info.txt
             exit
-          EOF
+          "
           echo "Done."
           echo ''
           echo "Deleting old files from smarthome.buanet.de..."
           if [ $FILENAME != $FILENAMEOLD ]
           then
-            lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
+            lftp -v -c "
+              set net:timeout 5
+              set net:max-retries 3
+              set net:reconnect-interval-base 5
               set ftp:ssl-force yes
               set ftp:ssl-protect-data true
               set ssl:verify-certificate no
+              open -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }}
               cd /latest-rpios-iobroker/
               rm $FILENAMEOLD | true
               exit
-            EOF
+            "
           fi
           echo "Done."
           echo ''
