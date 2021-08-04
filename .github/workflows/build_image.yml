@@ -63,13 +63,13 @@ jobs:
           echo ''
           echo "Getting information about current published image file from smarthome.buanet.de..."
           lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
-          set ftp:ssl-force yes
-          set ftp:ssl-protect-data true
-          set ssl:verify-certificate no
-          set xfer:clobber on
-          cd /latest-rpios-iobroker/
-          get info.txt -o info.old.txt
-          exit
+            set ftp:ssl-force yes
+            set ftp:ssl-protect-data true
+            set ssl:verify-certificate no
+            set xfer:clobber on
+            cd /latest-rpios-iobroker/
+            get info.txt -o info.old.txt
+            exit
           EOF
           FILENAMEOLD=$(cat info.old.txt)
           echo "Name of current published image is $FILENAMEOLD."
@@ -77,27 +77,27 @@ jobs:
           echo ''
           echo "Pushing new image and info file to smarthome.buanet.de..."
           lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
-          set ftp:ssl-force yes
-          set ftp:ssl-protect-data true
-          set ssl:verify-certificate no
-          cd /latest-rpios-iobroker/
-          put $FILEPATH
-          put info.txt
-          exit
+            set ftp:ssl-force yes
+            set ftp:ssl-protect-data true
+            set ssl:verify-certificate no
+            cd /latest-rpios-iobroker/
+            put $FILEPATH
+            put info.txt
+            exit
           EOF
           echo "Done."
           echo ''
           echo "Deleting old files from smarthome.buanet.de..."
           if [ $FILENAME != $FILENAMEOLD ]
-            then
+          then
             lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}:${{ secrets.FTP_PORT }} <<EOF
-            set ftp:ssl-force yes
-            set ftp:ssl-protect-data true
-            set ssl:verify-certificate no
-            cd /latest-rpios-iobroker/
-            rm $FILENAMEOLD | true
-            exit
-          EOF
+              set ftp:ssl-force yes
+              set ftp:ssl-protect-data true
+              set ssl:verify-certificate no
+              cd /latest-rpios-iobroker/
+              rm $FILENAMEOLD | true
+              exit
+            EOF
           fi
           echo "Done."
           echo ''
@@ -109,11 +109,16 @@ jobs:
           FILENAME=$(echo $FILEPATH | cut -d'/' -f4-)
           echo "Done."
           echo ''
+          
           echo "Pushing new image to iobroker.net..."
-          lftp -u ${{ secrets.FTP1_USER }},${{ secrets.FTP1_PASS }} sftp://${{ secrets.FTP1_HOST }}:${{ secrets.FTP1_PORT }} <<EOF
-          set sftp:auto-confirm yes
-          put $FILEPATH -o ioBroker_Image_RPi_v1.0.0_latest.zip
-          exit
-          EOF
+          lftp -v -c "
+            set net:timeout 5
+            set net:max-retries 3
+            set net:reconnect-interval-base 5
+            set sftp:auto-confirm yes
+            open -u ${{ secrets.FTP1_USER }},${{ secrets.FTP1_PASS }} sftp://${{ secrets.FTP1_HOST }}:${{ secrets.FTP1_PORT }}
+            put $FILEPATH -o ioBroker_Image_RPi_v1.1.0_latest.zip
+            exit
+          "
           echo "Done."
           echo ''
