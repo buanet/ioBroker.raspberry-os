@@ -61,6 +61,9 @@ jobs:
           echo -n $FILENAME > info.txt
           echo "Done."
           echo ''
+          echo "File path is: $FILEPATH"
+          echo "File name is: $FILENAME"
+          echo ''
           echo "Getting information about current published image file from smarthome.buanet.de..."
           lftp -v -c "
             set net:timeout 5
@@ -75,13 +78,14 @@ jobs:
             exit
           "
           FILENAMEOLD=$(cat info.old.txt)
-          echo "Name of current published image is $FILENAMEOLD."
           echo "Done."
+          echo ''
+          echo "Name of current published image is $FILENAMEOLD"
           echo ''
           echo "Pushing new image and info file to smarthome.buanet.de..."
           lftp -v -c "
             set net:timeout 5
-            set net:max-retries 3
+            set net:max-retries 10
             set net:reconnect-interval-base 5
             set ftp:ssl-force yes
             set ftp:ssl-protect-data true
@@ -99,7 +103,7 @@ jobs:
           then
             lftp -v -c "
               set net:timeout 5
-              set net:max-retries 3
+              set net:max-retries 10
               set net:reconnect-interval-base 5
               set ftp:ssl-force yes
               set ftp:ssl-protect-data true
@@ -120,11 +124,13 @@ jobs:
           FILENAME=$(echo $FILEPATH | cut -d'/' -f4-)
           echo "Done."
           echo ''
-          
+          echo "File path is: $FILEPATH"
+          echo "File name is: $FILENAME"
+          echo ''
           echo "Pushing new image to iobroker.net..."
           lftp -v -c "
             set net:timeout 5
-            set net:max-retries 3
+            set net:max-retries 10
             set net:reconnect-interval-base 5
             set sftp:auto-confirm yes
             open -u ${{ secrets.FTP1_USER }},${{ secrets.FTP1_PASS }} sftp://${{ secrets.FTP1_HOST }}:${{ secrets.FTP1_PORT }}
