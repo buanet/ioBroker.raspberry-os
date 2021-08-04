@@ -11,7 +11,10 @@ on:
     - cron: '0 1 * * 1'
       
 jobs:
-  bulid_image:
+  ###############################
+  ### Build and publish image ###
+  ############################### 
+  build_image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -139,3 +142,22 @@ jobs:
           "
           echo "Done."
           echo ''
+
+  ##################################
+  ### Run when a schedule failed ###
+  ################################## 
+  restart_when_failed:
+    name: Restarts the scheduled run when it failed
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' && failure()
+    needs: [build_image]
+    steps:
+      - name: Retry workflow
+        run: |
+          curl -i \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.ACTIONS_PAT }}" \
+          https://api.github.com/repos/buanet/ioBroker.raspberry-os/actions/workflows/11609519/dispatches \
+          -d '{"ref": "${{ github.ref }}" }'
+          
