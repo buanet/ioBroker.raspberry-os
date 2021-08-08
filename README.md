@@ -46,6 +46,10 @@ You can configure settings like locales, default User and more by editing the ``
 
 ## Changelog
 
+### v1.2.0-beta (2021-08-08)
+* adding uuid reset procedure for iobroker
+* update default config_de
+
 ### v1.1.0 (2021-07-27)
 * added automated build process with github actions
 * default user is now "pi"

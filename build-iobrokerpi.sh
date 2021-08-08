@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# get pi-gen sources from Github
+# get pi-gen sources from github
 git clone https://github.com/RPi-Distro/pi-gen
 
 # copy config file and iobrokerpi stage
