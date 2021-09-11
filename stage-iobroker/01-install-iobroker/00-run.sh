@@ -1,13 +1,21 @@
 #!/bin/bash -e
 
+# install node
+on_chroot << EOF
+echo "Installing Node"
+curl -sLf https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install -y nodejs
+EOF
+
 # run iobroker install script
 on_chroot << EOF
-echo "curl -sLf https://iobroker.net/install.sh | bash -"
+echo "Installing ioBroker"
 curl -sLf https://iobroker.net/install.sh | bash -
+ls -al
 EOF
 
 # enable iobroker autostart
 on_chroot << EOF
-echo "update-rc.d iobroker.sh defaults"
+echo "Enable autostart"
 update-rc.d iobroker.sh defaults
 EOF
