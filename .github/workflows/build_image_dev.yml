@@ -37,7 +37,8 @@ jobs:
       - name: Build image
         run: |
           cd ./pi-gen
-          ./build-docker.sh
+          ./build.sh
+          # ./build-docker.sh
           
       - name: Upload artifact
         uses: actions/upload-artifact@v2
