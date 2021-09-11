@@ -16,7 +16,10 @@ jobs:
           ref: 'dev'
         
       - name: Install prerequisites
-        run: sudo apt-get update && sudo apt-get install lftp
+        run: |
+          sudo apt-get update && sudo apt-get install lftp
+          # prerequisites for non docker build
+          sudo apt-get install quilt qemu-user-static debootstrap libarchive-tools qemu-utils
           
       - name: Preparing build
         run: |
