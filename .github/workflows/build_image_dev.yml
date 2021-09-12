@@ -5,8 +5,8 @@ name: Build Raspberry Pi image (dev)
 on:
   workflow_dispatch:
   push:
-  branches:
-    - dev
+    branches:
+      - dev
       
 jobs:
   bulid_image:
