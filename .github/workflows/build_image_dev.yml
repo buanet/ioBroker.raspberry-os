@@ -4,6 +4,9 @@ name: Build Raspberry Pi image (dev)
 
 on:
   workflow_dispatch:
+  push:
+  branches:
+    - dev
       
 jobs:
   bulid_image:
@@ -17,9 +20,11 @@ jobs:
         
       - name: Install prerequisites
         run: |
-          sudo apt-get update && sudo apt-get install lftp
+          sudo apt-get update
+          # prerequisites for pushing image
+          sudo apt-get install -y lftp
           # prerequisites for non docker build
-          sudo apt-get install quilt qemu-user-static debootstrap libarchive-tools qemu-utils
+          sudo apt-get install -y quilt qemu-user-static debootstrap libarchive-tools qemu-utils
           
       - name: Preparing build
         run: |
@@ -40,8 +45,8 @@ jobs:
       - name: Build image
         run: |
           cd ./pi-gen
-          sudo ./build.sh
-          # ./build-docker.sh
+          # sudo ./build.sh
+          sudo ./build-docker.sh
           
       - name: Upload artifact
         uses: actions/upload-artifact@v2
