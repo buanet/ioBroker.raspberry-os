@@ -10,7 +10,7 @@ EOF
 # run iobroker install script
 on_chroot << EOF
 echo "Installing ioBroker"
-curl -sLf https://iobroker.net/install.sh | bash -
+curl -sLf https://iobroker.net/install.sh | sudo -E bash -
 ls -al
 EOF
 
