@@ -23,24 +23,32 @@ jobs:
           sudo apt-get update
           # prerequisites for pushing image
           sudo apt-get install -y lftp
-          # prerequisites for non docker build
-          sudo apt-get install -y quilt qemu-user-static debootstrap libarchive-tools qemu-utils
+          # prerequisites for pi-gen
+          sudo apt-get install -y coreutils quilt parted binfmt-support qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx
           
       - name: Preparing build
         run: |
           echo "Getting source files for build..."
           git clone https://github.com/RPi-Distro/pi-gen
+          echo "Done."
+          echo " "
           echo "Copying config file and iobrokerpi stage..."
           cp ./config pi-gen/config
           cp -R ./stage-iobroker pi-gen/stage-iobroker
           chmod -R +x pi-gen
           cd ./pi-gen
+          echo "Done."
+          echo " "
           echo "Adding skip files..."
           touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
           touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
           rm ./stage4/EXPORT* ./stage5/EXPORT*
+          echo "Done."
+          echo " "
           echo "Manipulating build script..."
           sed -i 's/-e "GIT_HASH=${GIT_HASH}"/-e "GIT_HASH=${GIT_HASH}" --hostname iobroker-pi/' ./build-docker.sh
+          echo "Done."
+          echo " "
       
       - name: Build image
         run: |
