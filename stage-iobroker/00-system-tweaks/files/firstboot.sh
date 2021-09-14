@@ -12,12 +12,6 @@ raspi-config nonint do_expand_rootfs
 echo 'Updating date and time'
 ntpdate 0.debian.pool.ntp.org
 
-# reset uuid in iobroker 
-echo 'Generating UUID for ioBroker'
-cd /opt/iobroker
-iob stop
-iob unsetup -y
-
 # Reboot
 echo 'Rebooting'
 reboot
