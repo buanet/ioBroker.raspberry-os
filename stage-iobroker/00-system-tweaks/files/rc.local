@@ -14,7 +14,7 @@ if [ "$_IP" ]; then
 fi
 
 # check if iobroker uuid needs to be changed 
-if [ -e touch /root/iob_uuid_not_changed ]; then
+if [ -e /root/iob_uuid_not_changed ]; then
   sleep 10
   # remove check file
   rm /root/iob_uuid_not_changed
