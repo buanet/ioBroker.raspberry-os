@@ -18,11 +18,10 @@ if [ -e /root/iob_uuid_not_changed ]; then
   sleep 10
   # remove check file
   rm /root/iob_uuid_not_changed
-  # resetting uuid
-  cd /opt/iobroker
-  iob stop
-  iob unsetup -y
-  iob start
+  # run fix script
+  if [ -e /root/fix_iob_uuid.sh ]; then
+    /root/fix_iob_uuid.sh > /root/fix_iob_uuid.log 2>&1
+  fi
 fi
 
 # runs firstboot.sh only on verty first boot
