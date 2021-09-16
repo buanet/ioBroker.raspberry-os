@@ -10,3 +10,4 @@ EOF
 echo "[LOG] Enabling autostart"
 on_chroot << EOF
   update-rc.d iobroker.sh defaults
+EOF
