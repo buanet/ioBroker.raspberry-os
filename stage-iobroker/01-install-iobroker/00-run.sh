@@ -14,13 +14,14 @@ EOF
 
 # temp logging to check uuid behavior
 on_chroot << EOF
-  echo "[LOG] This is the build UUID: $(iob uuid)"
+  cd /opt/iobroker
+  echo "[LOG] This is the build UUID: $(iobroker uuid)"
 EOF
 
 # resetting ioBroker UUID
 echo "[LOG] Resetting ioBroker UUID"
 on_chroot << EOF
   cd /opt/iobroker
-  iob stop
-  iob unsetup -y
+  iobroker stop
+  iobroker unsetup -y
 EOF
