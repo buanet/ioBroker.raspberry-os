@@ -14,20 +14,20 @@ if [ "$_IP" ]; then
 fi
 
 # check if iobroker uuid needs to be changed 
-if [ -e /root/iob_uuid_not_changed ]; then
-  sleep 10
-  # remove check file
-  rm /root/iob_uuid_not_changed
-  # run fix script
-  if [ -e /root/fix_iob_uuid.sh ]; then
-    /root/fix_iob_uuid.sh > /root/fix_iob_uuid.log 2>&1
-  fi
-fi
+#if [ -e /root/iob_uuid_not_changed ]; then
+#  sleep 10
+#  # remove check file
+#  rm /root/iob_uuid_not_changed
+#  # run fix script
+#  if [ -e /root/fix_iob_uuid.sh ]; then
+#    /root/fix_iob_uuid.sh > /root/fix_iob_uuid.log 2>&1
+#  fi
+#fi
 
 # runs firstboot.sh only on verty first boot
 if [ ! -e /root/firstboot_done ]; then
   touch /root/firstboot_done
-  touch /root/iob_uuid_not_changed
+  #touch /root/iob_uuid_not_changed
   if [ -e /root/firstboot.sh ]; then
     /root/firstboot.sh
   fi
