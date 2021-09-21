@@ -5,8 +5,8 @@ DEPLOY_ZIP=1
 
 # system default settings
 TARGET_HOSTNAME='iobroker-pi'
-FIRST_USER_NAME='iobroker'
-FIRST_USER_PASS='iobroker'
+# FIRST_USER_NAME='pi'
+# FIRST_USER_PASS='raspberry'
 ENABLE_SSH=1
 LOCALE_DEFAULT='de_DE.UTF-8'
 TIMEZONE_DEFAULT='Europe/Berlin'

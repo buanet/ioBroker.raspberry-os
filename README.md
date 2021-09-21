@@ -1,8 +1,7 @@
 # Raspberry OS image with ioBroker
 
 [![Release](https://img.shields.io/github/v/release/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/releases)
-[![Github Issues](https://img.shields.io/github/issues/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/issues)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/buanet/ioBroker.raspberry-os/Build%20Raspberry%20Pi%20image)](https://github.com/buanet/ioBroker.raspberry-os/actions/workflows/build_image.yml)<br>
+[![Github Issues](https://img.shields.io/github/issues/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/issues)<br>
 [![License](https://img.shields.io/github/license/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/blob/master/LICENSE.md)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue)](https://paypal.me/buanet)
 
@@ -45,6 +44,10 @@ sudo ./cleanup.sh
 You can configure settings like locales, default User and more by editing the ```config``` file. For more details see the original [pi-gen readme.md](https://github.com/RPi-Distro/pi-gen/blob/master/README.md).
 
 ## Changelog
+
+### v1.2.0-beta (2021-08-08)
+* adding uuid reset procedure for iobroker
+* update default config_de
 
 ### v1.1.0 (2021-07-27)
 * added automated build process with github actions
