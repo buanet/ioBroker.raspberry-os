@@ -1,0 +1,18 @@
+# Due to some issues with githun action runners the build process will run on an external runner.
+# This workflow will trigger this external build process.
+name: Trigger external build
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  trigger_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: iob.raspberry-os - Build Raspberry OS image (main)
+          repo: buanet/private.actionsrunner
+          token: ${{ secrets.ACTIONS_PAT }}
