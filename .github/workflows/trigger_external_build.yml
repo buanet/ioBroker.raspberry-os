@@ -1,10 +1,14 @@
-# Due to some issues with githun action runners the build process will run on an external runner.
+# Due to some issues with Github action runners the build process will run on an external runner.
 # This workflow will trigger this external build process.
 name: Trigger external build
 
 on:
   workflow_dispatch:
-
+  release:
+    types:
+      - published
+  schedule:
+    - cron: '03 3 * * 5'
 
 jobs:
   trigger_build:
