@@ -1,6 +1,6 @@
 # Due to some issues with Github action runners the build process will run on an external runner.
 # This workflow will trigger this external build process.
-name: Trigger external build
+name: Trigger external build (main)
 
 on:
   workflow_dispatch:
@@ -11,10 +11,10 @@ on:
     - cron: '03 3 * * 5'
 
 jobs:
-  trigger_build:
+  trigger_main_build:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger build
+      - name: Trigger build (main)
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: iob.raspberry-os - Build Raspberry OS image (main)
