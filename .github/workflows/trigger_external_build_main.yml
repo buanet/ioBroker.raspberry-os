@@ -8,7 +8,7 @@ on:
     types:
       - published
   schedule:
-    - cron: '03 3 * * 5'
+    - cron: '0 10 1 * *'
 
 jobs:
   trigger_main_build:
