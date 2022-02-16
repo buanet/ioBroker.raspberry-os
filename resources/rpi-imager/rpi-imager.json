@@ -1,16 +1,16 @@
 {
-  "os_list": [
-    {
-      "name": "ioBroker Raspberry Pi OS v1.2.0",
-      "description": "Official Raspberry Pi OS Image for ioBroker open-source IoT platform.",
-      "url": "https://github.com/buanet/ioBroker.raspberry-os/releases/download/v1.2.0/2022-02-04_RaspberryOS_ioBroker_Image_v1.2.0_en.zip",
-      "icon": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/resources/rpi-imager/iob-icon.png",
-      "release_date": "2022-02-04",
-      "extract_size": 0,
-      "extract_sha256": "0",
-      "image_download_size": 0,
-      "image_download_sha256": "0",
-      "website": "https://www.iobroker.net/"
-    }
-  ]
+    "os_list": [
+      {
+        "name": "ioBroker Raspberry Pi OS v1.2.0",
+        "description": "Official Raspberry Pi OS Image for ioBroker open-source IoT platform.",
+        "url": "https://github.com/buanet/ioBroker.raspberry-os/releases/download/v1.2.0/2022-02-04_RaspberryOS_ioBroker_Image_v1.2.0_en.zip",
+        "icon": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/resources/rpi-imager/iob-icon.png",
+        "release_date": "2022-02-04",
+        "extract_size": 0,
+        "extract_sha256": "0",
+        "image_download_size": 0,
+        "image_download_sha256": "0",
+        "website": "https://www.iobroker.net/"
+      }
+    ]
 }
