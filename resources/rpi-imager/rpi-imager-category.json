@@ -1,0 +1,8 @@
+// Snippet to include ioBroker Image in Raspberry Pi Imager uder "Other specific-purpose OS" > "Home assistants and home automation"
+
+{
+  "name": "ioBroker",
+  "description": "Official Raspberry Pi OS Image for ioBroker open-source IoT platform.",
+  "icon": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/resources/rpi-imager/iob-icon.png",
+  "subitems_url": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/resources/rpi-imager/rpi-imager.json"
+},
