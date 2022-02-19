@@ -1,6 +1,6 @@
 # Github action to build Raspberry Pi image from main branch
 
-name: iob.raspberry-os - Build Raspberry OS image (main)
+name: Test build
 
 on:
   workflow_dispatch:
