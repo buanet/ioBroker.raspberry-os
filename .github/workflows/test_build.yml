@@ -1,0 +1,135 @@
+# Github action to build Raspberry Pi image from main branch
+
+name: iob.raspberry-os - Build Raspberry OS image (main)
+
+on:
+  workflow_dispatch:
+      
+jobs:
+  build_main_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetching latest release tag
+        run: |
+          LATESTRELEASE="$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.tag_name')"
+          echo 'Latest release tag : $LATESTRELEASE'
+          echo 'RELEASE_TAG=$LATESTRELEASE' >> $GITHUB_ENV
+
+      - name: Checkout ioBroker.raspberry-os
+        uses: actions/checkout@v2.4.0
+        with:
+          repository: 'buanet/ioBroker.raspberry-os'
+          ref: ${{ env.RELEASE_TAG }}
+          path: ioBroker.raspberry-os
+         
+      - name: Preparing build
+        run: |
+          echo 'Locking build date...'
+          DATE=$(date '+%Y-%m-%d')
+          echo 'Build date : $DATE'
+          echo 'DATE=$DATE' >> $GITHUB_ENV
+          echo 'Done.'
+          echo ' '
+          echo 'Cloning pi-gen build tool...'
+          git clone https://github.com/RPi-Distro/pi-gen
+          echo 'Done.'
+          echo ' '
+          echo 'Preparing config file and iobroker stage...'
+          cp ./ioBroker.raspberry-os/config ./pi-gen/config
+          cp -R ./ioBroker.raspberry-os/stage-iobroker ./pi-gen/stage-iobroker
+          chmod -R +x pi-gen
+          echo 'Done.'
+          echo ' '
+          echo 'Changing work dir...'
+          cd ./pi-gen
+          echo 'Done.'
+          echo ' '         
+          echo 'Adding skip files for unused stages...'
+          touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
+          touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
+          rm ./stage4/EXPORT* ./stage5/EXPORT*
+          echo 'Done.'
+          echo ' '
+          echo 'Manipulating build script...'
+          sed -i 's/-e "GIT_HASH=${GIT_HASH}"/-e "GIT_HASH=${GIT_HASH}" --hostname iobroker-pi/' ./build-docker.sh
+          ## temp fix for issues with debian bullseye
+          sed -i 's/:bullseye/:buster/' ./build-docker.sh
+          sed -i 's/:bullseye/:buster/' ./Dockerfile
+          ## temp fix for missing gpg command
+          # sed -i 's/fdisk/fdisk gnupg2/' ./Dockerfile
+          echo 'Done.'
+          echo ' '
+      
+      - name: Build image
+        timeout-minutes: 90
+        run: |
+          cd ./pi-gen
+          ./build-docker.sh
+
+      - name: Get publishing info
+        run: |
+          IMAGE_PATH=$(find ./pi-gen/deploy/ -name '*.zip')
+          echo 'Image path : $IMAGE_PATH'
+          echo "IMAGE_PATH=$IMAGE_PATH" >> $GITHUB_ENV
+          IMAGE_NAME=$(echo $IMAGE_PATH | cut -d'/' -f4-)
+          echo 'Image name : $IMAGE_NAME'
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+
+      - name: Preparing deploy for upload
+        run: |
+          echo 'Generating deploy.zip...'
+          cd ./pi-gen/deploy && zip -r ../../deploy.zip ./* 
+          echo 'Done.'
+          echo ''
+
+      - name: Publish image to Github release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_name: buanet/ioBroker.raspberry-os
+          repo_token: ${{ secrets.ACTIONS_PAT }}
+          tag: ${{ env.RELEASE_TAG }}
+          file: ${{ env.IMAGE_PATH }}
+          asset_name: ${{ env.DATE }}_RaspberryOS_ioBroker_Image_${{ env.RELEASE_TAG }}.zip
+          overwrite: true
+
+#      - name: Uploading deploy.zip to cloud.buanet.de
+#        run: |
+#          echo 'Uploading...'
+#          curl -u ${{ secrets.NC_USER }}:${{ secrets.NC_PASS }} -T ./deploy.zip "https://${{ secrets.NC_HOST }}/remote.php/dav/files/fileshare/rpios-iobroker/${{ env.DATE }}_Deploy_RaspberryOS_ioBroker_${{ env.RELEASE_TAG }}.zip"
+#          echo 'Done.'
+#          echo ''
+
+      - name: Updating repo for rpi-imager
+        run: |
+          DL_SIZE=$(ls -l ${{ env.IMAGE_PATH }} | awk '{print $5;}')
+          echo 'Download size: $DL_SIZE'
+          DL_CHKS=$(sha256sum ${{ env.IMAGE_PATH }} | awk '{print $1;}')
+          echo 'Download checksum : $DL_CHECK'
+          unzip ${{ env.IMAGE_PATH }} -d ./
+          IMG_SIZE=$(ls -l ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $5;}')
+          echo 'Image size: $IMG_SIZE'
+          IMG_CHKS=$(sha256sum ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $1;}')
+          echo 'Image checksum: $DL_CHECK'
+          jq ".os_list.name = \"ioBroker Raspberry Pi OS ${{ env.RELEASE_TAG }}\" | \
+              .os_list.url = \"none" | \
+              .os_list.release_date = \"${{ env.DATE }}\" | \
+              .os_list.extract_size = ${IMG_SIZE} | \
+              .os_list.extract_sha256 = \"${IMG_CHKS}\" | \
+              .os_list.image_download_size = ${DL_SIZE} | \
+              .os_list.image_download_sha256 = \"${DL_CHKS}\"" ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json > ./rpi-imager-tmp.json
+          mv ./rpi-imager-tmp.json ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json
+          cat ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json
+
+
+#  retry_when_failed:
+#    name: Retry workflow when failed
+#    runs-on: ubuntu-latest
+#    if: failure()
+#    needs: [build_main_image]
+#    steps:
+#      - name: Trigger build
+#        uses: benc-uk/workflow-dispatch@v1
+#        with:
+#          workflow: Trigger external build (main)
+#          repo: buanet/ioBroker.raspberry-os
+#          token: ${{ secrets.ACTIONS_PAT }}
