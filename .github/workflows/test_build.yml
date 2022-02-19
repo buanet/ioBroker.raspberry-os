@@ -11,9 +11,9 @@ jobs:
     steps:
       - name: Fetching latest release tag
         run: |
-          LATESTRELEASE="$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.tag_name')"
-          echo 'Latest release tag : $LATESTRELEASE'
-          echo 'RELEASE_TAG=$LATESTRELEASE' >> $GITHUB_ENV
+          LATEST_RELEASE="$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.tag_name')"
+          echo "Latest release tag: $LATEST_RELEASE"
+          echo "RELEASE_TAG=$LATEST_RELEASE" >> $GITHUB_ENV
 
       - name: Checkout ioBroker.raspberry-os
         uses: actions/checkout@v2.4.0
@@ -26,8 +26,8 @@ jobs:
         run: |
           echo 'Locking build date...'
           DATE=$(date '+%Y-%m-%d')
-          echo 'Build date : $DATE'
-          echo 'DATE=$DATE' >> $GITHUB_ENV
+          echo "Build date: $DATE"
+          echo "DATE=$DATE" >> $GITHUB_ENV
           echo 'Done.'
           echo ' '
           echo 'Cloning pi-gen build tool...'
@@ -69,10 +69,10 @@ jobs:
       - name: Get publishing info
         run: |
           IMAGE_PATH=$(find ./pi-gen/deploy/ -name '*.zip')
-          echo 'Image path : $IMAGE_PATH'
+          echo "Image path: $IMAGE_PATH"
           echo "IMAGE_PATH=$IMAGE_PATH" >> $GITHUB_ENV
           IMAGE_NAME=$(echo $IMAGE_PATH | cut -d'/' -f4-)
-          echo 'Image name : $IMAGE_NAME'
+          echo "Image name: $IMAGE_NAME"
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
       - name: Preparing deploy for upload
@@ -102,14 +102,14 @@ jobs:
       - name: Updating repo for rpi-imager
         run: |
           DL_SIZE=$(ls -l ${{ env.IMAGE_PATH }} | awk '{print $5;}')
-          echo 'Download size: $DL_SIZE'
+          echo "Download size: $DL_SIZE"
           DL_CHKS=$(sha256sum ${{ env.IMAGE_PATH }} | awk '{print $1;}')
-          echo 'Download checksum : $DL_CHECK'
+          echo "Download checksum : $DL_CHECK"
           unzip ${{ env.IMAGE_PATH }} -d ./
           IMG_SIZE=$(ls -l ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $5;}')
-          echo 'Image size: $IMG_SIZE'
+          echo "Image size: $IMG_SIZE"
           IMG_CHKS=$(sha256sum ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $1;}')
-          echo 'Image checksum: $DL_CHECK'
+          echo "Image checksum: $DL_CHECK"
           jq ".os_list.name = \"ioBroker Raspberry Pi OS ${{ env.RELEASE_TAG }}\" | \
               .os_list.url = \"none" | \
               .os_list.release_date = \"${{ env.DATE }}\" | \
