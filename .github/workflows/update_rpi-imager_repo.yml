@@ -25,7 +25,7 @@ jobs:
           echo 'Download latest ioBroker Raspberry Pi image...'
           URL=$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.assets[].browser_download_url' | tail -n1)
           echo "Download URL: $URL"
-          wget $URL
+          wget -q $URL
           FILE_NAME=$(find ./ -name '*.zip')
           echo "File name: $FILE_NAME"
           DATE=2022-02-20
@@ -58,6 +58,18 @@ jobs:
           mv ./rpi-imager-tmp.json ./rpi-imager/rpi-imager.json
           echo 'Done.'
           echo ''
+          echo 'Remove downloaded files...'
+          rm $FILE_NAME
+          rm $DATE-ioBrokerPi-lite.img
+          echo 'Done.'
+
+      - name: Check for modified files
+        id: git-check
+        run: echo ::set-output name=modified::$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
+
+      - name: Commit latest release version
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
           echo 'Publish rpi-imager.json...'
           git config --global user.name 'buanet'
           git config --global user.email 'info@buanet.de'
