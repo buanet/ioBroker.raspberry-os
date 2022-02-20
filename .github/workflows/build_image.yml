@@ -1,6 +1,6 @@
 # Github action to build Raspberry Pi image from main branch
 
-name: Test build
+name: Build ioBroker Raspberry Pi image
 
 on:
   workflow_dispatch:
@@ -99,60 +99,60 @@ jobs:
 #          echo 'Done.'
 #          echo ''
 
-      - name: Update rpi-imager.json
-        run: |
-          echo 'Fetch information for download file...'
-          DL_SIZE=$(ls -l ${{ env.IMAGE_PATH }} | awk '{print $5;}')
-          echo "Download size: $DL_SIZE"
-          DL_CHKS=$(sha256sum ${{ env.IMAGE_PATH }} | awk '{print $1;}')
-          echo "Download checksum: $DL_CHKS"
-          echo 'Done.'
-          echo ''
-          echo 'Fetch information for image file...'
-          unzip ${{ env.IMAGE_PATH }} -d ./
-          IMG_SIZE=$(ls -l ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $5;}')
-          echo "Image size: $IMG_SIZE"
-          IMG_CHKS=$(sha256sum ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $1;}')
-          echo "Image checksum: $IMG_CHKS"
-          echo 'Done.'
-          echo ''
-          echo 'Fetch download url for image...'
-          URL=$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.assets[].browser_download_url' | tail -n1)
-          echo "Download URL: $URL"
-          echo 'Done.'
-          echo ''
-          echo 'Update rpi-imager.json...'
-          jq ".os_list[].name = \"ioBroker Raspberry Pi OS ${{ env.RELEASE_TAG }}\" | \
-              .os_list[].url = \"${URL}\" | \
-              .os_list[].release_date = \"${{ env.DATE }}\" | \
-              .os_list[].extract_size = ${IMG_SIZE} | \
-              .os_list[].extract_sha256 = \"${IMG_CHKS}\" | \
-              .os_list[].image_download_size = ${DL_SIZE} | \
-              .os_list[].image_download_sha256 = \"${DL_CHKS}\"" ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json > ./rpi-imager-tmp.json
-          echo 'Done.'
-          echo ''
+#      - name: Update rpi-imager.json
+#        run: |
+#          echo 'Fetch information for download file...'
+#          DL_SIZE=$(ls -l ${{ env.IMAGE_PATH }} | awk '{print $5;}')
+#          echo "Download size: $DL_SIZE"
+#          DL_CHKS=$(sha256sum ${{ env.IMAGE_PATH }} | awk '{print $1;}')
+#          echo "Download checksum: $DL_CHKS"
+#          echo 'Done.'
+#          echo ''
+#          echo 'Fetch information for image file...'
+#          unzip ${{ env.IMAGE_PATH }} -d ./
+#          IMG_SIZE=$(ls -l ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $5;}')
+#          echo "Image size: $IMG_SIZE"
+#          IMG_CHKS=$(sha256sum ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $1;}')
+#          echo "Image checksum: $IMG_CHKS"
+#          echo 'Done.'
+#          echo ''
+#          echo 'Fetch download url for image...'
+#          URL=$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.assets[].browser_download_url' | tail -n1)
+#          echo "Download URL: $URL"
+#          echo 'Done.'
+#          echo ''
+#          echo 'Update rpi-imager.json...'
+#          jq ".os_list[].name = \"ioBroker Raspberry Pi OS ${{ env.RELEASE_TAG }}\" | \
+#              .os_list[].url = \"${URL}\" | \
+#              .os_list[].release_date = \"${{ env.DATE }}\" | \
+#              .os_list[].extract_size = ${IMG_SIZE} | \
+#              .os_list[].extract_sha256 = \"${IMG_CHKS}\" | \
+#              .os_list[].image_download_size = ${DL_SIZE} | \
+#              .os_list[].image_download_sha256 = \"${DL_CHKS}\"" ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json > ./rpi-imager-tmp.json
+#          echo 'Done.'
+#          echo ''
 
-      - name: Checkout ioBroker.raspberry-os main
-        uses: actions/checkout@v2.4.0
-        with:
-          repository: 'buanet/ioBroker.raspberry-os'
-          ref: main
-          path: ioBroker.raspberry-os.main
+#      - name: Checkout ioBroker.raspberry-os main
+#        uses: actions/checkout@v2.4.0
+#        with:
+#          repository: 'buanet/ioBroker.raspberry-os'
+#          ref: main
+#          path: ioBroker.raspberry-os.main
 
-      - name: Commit rpi-imager.json
-        run: |
-          mv ./rpi-imager-tmp.json ./ioBroker.raspberry-os.main/resources/rpi-imager/rpi-imager.json
-          echo 'Change work dir...'
-          cd ./ioBroker.raspberry-os.main
-          echo 'Done.'
-          echo ''
-          echo 'Publish rpi-imager.json...'
-          git config --global user.name 'buanet'
-          git config --global user.email 'info@buanet.de'
-          git commit -am "update information for rpi-imager"
-          git push
-          echo 'Done.'
-          echo ''
+#      - name: Commit rpi-imager.json
+#        run: |
+#          mv ./rpi-imager-tmp.json ./ioBroker.raspberry-os.main/resources/rpi-imager/rpi-imager.json
+#          echo 'Change work dir...'
+#          cd ./ioBroker.raspberry-os.main
+#          echo 'Done.'
+#          echo ''
+#          echo 'Publish rpi-imager.json...'
+#          git config --global user.name 'buanet'
+#          git config --global user.email 'info@buanet.de'
+#          git commit -am "update information for rpi-imager"
+#          git push
+#          echo 'Done.'
+#          echo ''
 
 #  retry_when_failed:
 #    name: Retry workflow when failed

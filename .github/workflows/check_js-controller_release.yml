@@ -1,0 +1,45 @@
+name: Check js-controller release
+
+on:
+  schedule:
+    - cron: '42 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-and-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2.4.0
+        with:
+          repository: 'buanet/ioBroker.raspberry-os'
+
+      - name: Fetch js-controller release version
+        run: |
+          echo 'Fetch js-controller release version...'
+          curl -sL https://repo.iobroker.live/sources-dist.json | \
+          jq -r '."js-controller".version' > .github/dependencies/.js-controller-version
+          echo "Released js-controller version: $(cat .github/dependencies/.js-controller-version)"
+          echo 'Done.'
+          echo'
+
+      - name: Check for modified files
+        id: git-check
+        run: echo ::set-output name=modified::$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
+
+      - name: Commit latest release version
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config --global user.name 'buanet'
+          git config --global user.email 'info@buanet.de'
+          git commit -am "new js-controller release"
+          git push
+
+      - name: Trigger image build
+        if: steps.git-check.outputs.modified == 'true'
+        uses: benc-uk/workflow-dispatch@v1.1
+        with:
+          workflow: Build ioBroker Raspberry Pi image
+          repo: buanet/ioBroker.raspberry-os
+#          token: ${{ secrets.ACTIONS_PAT }}
+
