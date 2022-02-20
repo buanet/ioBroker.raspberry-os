@@ -21,7 +21,6 @@ jobs:
           jq -r '."js-controller".version' > .github/dependencies/.js-controller-version
           echo "Released js-controller version: $(cat .github/dependencies/.js-controller-version)"
           echo 'Done.'
-          echo'
 
       - name: Check for modified files
         id: git-check
