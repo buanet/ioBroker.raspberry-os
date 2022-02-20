@@ -40,5 +40,5 @@ jobs:
         with:
           workflow: Build ioBroker Raspberry Pi image
           repo: buanet/ioBroker.raspberry-os
-#          token: ${{ secrets.ACTIONS_PAT }}
+          token: ${{ secrets.ACTIONS_PAT }}
 
