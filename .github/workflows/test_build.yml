@@ -9,7 +9,7 @@ jobs:
   build_main_image:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetching latest release tag
+      - name: Fetch latest release tag
         run: |
           LATEST_RELEASE="$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.tag_name')"
           echo "Latest release tag: $LATEST_RELEASE"
@@ -22,35 +22,35 @@ jobs:
           ref: ${{ env.RELEASE_TAG }}
           path: ioBroker.raspberry-os
 
-      - name: Preparing build
+      - name: Prepare build
         run: |
-          echo 'Locking build date...'
+          echo 'Lock build date...'
           DATE=$(date '+%Y-%m-%d')
           echo "Build date: $DATE"
           echo "DATE=$DATE" >> $GITHUB_ENV
           echo 'Done.'
           echo ''
-          echo 'Cloning pi-gen build tool...'
+          echo 'Clone pi-gen build tool...'
           git clone https://github.com/RPi-Distro/pi-gen
           echo 'Done.'
           echo ''
-          echo 'Preparing config file and iobroker stage...'
+          echo 'Prepare config file and iobroker stage...'
           cp ./ioBroker.raspberry-os/config ./pi-gen/config
           cp -R ./ioBroker.raspberry-os/stage-iobroker ./pi-gen/stage-iobroker
           chmod -R +x pi-gen
           echo 'Done.'
           echo ''
-          echo 'Changing work dir...'
+          echo 'Change work dir...'
           cd ./pi-gen
           echo 'Done.'
           echo ''
-          echo 'Adding skip files for unused stages...'
+          echo 'Add skip files for unused stages...'
           touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
           touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
           rm ./stage4/EXPORT* ./stage5/EXPORT*
           echo 'Done.'
           echo ''
-          echo 'Manipulating build script...'
+          echo 'Manipulate build script...'
           sed -i 's/-e "GIT_HASH=${GIT_HASH}"/-e "GIT_HASH=${GIT_HASH}" --hostname iobroker-pi/' ./build-docker.sh
           ## temp fix for issues with debian bullseye
           sed -i 's/:bullseye/:buster/' ./build-docker.sh
@@ -75,9 +75,9 @@ jobs:
           echo "Image name: $IMAGE_NAME"
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
-      - name: Preparing deploy for upload
+      - name: Prepare deploy for upload
         run: |
-          echo 'Generating deploy.zip...'
+          echo 'Generate deploy.zip...'
           cd ./pi-gen/deploy && zip -r ../../deploy.zip ./* 
           echo 'Done.'
           echo ''
@@ -92,7 +92,7 @@ jobs:
           asset_name: ${{ env.DATE }}_RaspberryOS_ioBroker_Image_${{ env.RELEASE_TAG }}.zip
           overwrite: true
 
-#      - name: Uploading deploy.zip to cloud.buanet.de
+#      - name: Upload deploy.zip to cloud.buanet.de
 #        run: |
 #          echo 'Uploading...'
 #          curl -u ${{ secrets.NC_USER }}:${{ secrets.NC_PASS }} -T ./deploy.zip "https://${{ secrets.NC_HOST }}/remote.php/dav/files/fileshare/rpios-iobroker/${{ env.DATE }}_Deploy_RaspberryOS_ioBroker_${{ env.RELEASE_TAG }}.zip"
@@ -101,14 +101,14 @@ jobs:
 
       - name: Update snd commit rpi-imager.json
         run: |
-          echo 'Fetching information for download file...'
+          echo 'Fetch information for download file...'
           DL_SIZE=$(ls -l ${{ env.IMAGE_PATH }} | awk '{print $5;}')
           echo "Download size: $DL_SIZE"
           DL_CHKS=$(sha256sum ${{ env.IMAGE_PATH }} | awk '{print $1;}')
           echo "Download checksum: $DL_CHKS"
           echo 'Done.'
           echo ''
-          echo 'Fetching information for image file...'
+          echo 'Fetch information for image file...'
           unzip ${{ env.IMAGE_PATH }} -d ./
           IMG_SIZE=$(ls -l ${{ env.DATE }}-ioBrokerPi-lite.img | awk '{print $5;}')
           echo "Image size: $IMG_SIZE"
@@ -116,12 +116,12 @@ jobs:
           echo "Image checksum: $IMG_CHKS"
           echo 'Done.'
           echo ''
-          echo 'Fetching download url for image...'
+          echo 'Fetch download url for image...'
           URL=$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.assets[].browser_download_url' | tail -n1)
           echo "Download URL: $URL"
           echo 'Done.'
           echo ''
-          echo 'Updating rpi-imager.json...'
+          echo 'Update rpi-imager.json...'
           jq ".os_list[].name = \"ioBroker Raspberry Pi OS ${{ env.RELEASE_TAG }}\" | \
               .os_list[].url = \"${URL}\" | \
               .os_list[].release_date = \"${{ env.DATE }}\" | \
@@ -133,7 +133,11 @@ jobs:
           cat ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json
           echo 'Done.'
           echo ''
-          echo 'Publishing rpi-imager.json...'
+          echo 'Change work dir...'
+          cd ./ioBroker.raspberry-os
+          echo 'Done.'
+          echo ''
+          echo 'Publish rpi-imager.json...'
           git config --global user.name 'buanet'
           git config --global user.email 'info@buanet.de'
           git commit -am "update information for rpi-imager"

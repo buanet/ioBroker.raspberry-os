@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/blob/master/LICENSE.md)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue)](https://paypal.me/buanet)
 
-This repo is used to auto generate preconfigured Raspberry OS images for ioBroker IoT platform. For more details about ioBroker and the download of the lastest image see: [iobroker.net](https://www.iobroker.net/).
+This repo is used to auto generate pre configured Raspberry OS images for ioBroker IoT platform. For more details about ioBroker and the download of the latest image see: [iobroker.net](https://www.iobroker.net/).
 
 This build uses the official Raspberry Pi OS build script from https://github.com/RPi-Distro/pi-gen. It takes the stages for the default lite image and adds a custom stage for setting up ioBroker.
 
@@ -69,7 +69,7 @@ You can configure settings like locales, default User and more by editing the ``
 
 MIT License
 
-Copyright (c) 2022 [André Germann]
+Copyright (c) 2022 André Germann
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
