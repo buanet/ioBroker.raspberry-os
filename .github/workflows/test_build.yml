@@ -15,7 +15,7 @@ jobs:
           echo "Latest release tag: $LATEST_RELEASE"
           echo "RELEASE_TAG=$LATEST_RELEASE" >> $GITHUB_ENV
 
-      - name: Checkout ioBroker.raspberry-os
+      - name: Checkout ioBroker.raspberry-os latest stable
         uses: actions/checkout@v2.4.0
         with:
           repository: 'buanet/ioBroker.raspberry-os'
@@ -99,7 +99,7 @@ jobs:
 #          echo 'Done.'
 #          echo ''
 
-      - name: Update snd commit rpi-imager.json
+      - name: Update rpi-imager.json
         run: |
           echo 'Fetch information for download file...'
           DL_SIZE=$(ls -l ${{ env.IMAGE_PATH }} | awk '{print $5;}')
@@ -129,12 +129,21 @@ jobs:
               .os_list[].extract_sha256 = \"${IMG_CHKS}\" | \
               .os_list[].image_download_size = ${DL_SIZE} | \
               .os_list[].image_download_sha256 = \"${DL_CHKS}\"" ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json > ./rpi-imager-tmp.json
-          mv ./rpi-imager-tmp.json ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json
-          cat ./ioBroker.raspberry-os/resources/rpi-imager/rpi-imager.json
           echo 'Done.'
           echo ''
+
+      - name: Checkout ioBroker.raspberry-os main
+        uses: actions/checkout@v2.4.0
+        with:
+          repository: 'buanet/ioBroker.raspberry-os'
+          ref: main
+          path: ioBroker.raspberry-os.main
+
+      - name: Commit rpi-imager.json
+        run: |
+          mv ./rpi-imager-tmp.json ./ioBroker.raspberry-os.main/resources/rpi-imager/rpi-imager.json
           echo 'Change work dir...'
-          cd ./ioBroker.raspberry-os
+          cd ./ioBroker.raspberry-os.main
           echo 'Done.'
           echo ''
           echo 'Publish rpi-imager.json...'
