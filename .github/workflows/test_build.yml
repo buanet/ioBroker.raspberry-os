@@ -116,9 +116,14 @@ jobs:
           echo "Image checksum: $IMG_CHKS"
           echo 'Done.'
           echo ''
+          echo 'Fetching download url for image...'
+          URL=$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.assets[].browser_download_url' | tail -n1)
+          echo "Download URL: $URL"
+          echo 'Done.'
+          echo ''
           echo 'Updating rpi-imager.json...'
           jq ".os_list.name = \"ioBroker Raspberry Pi OS ${{ env.RELEASE_TAG }}\" | \
-              .os_list.url = \"none\" | \
+              .os_list.url = \"${URL}\" | \
               .os_list.release_date = \"${{ env.DATE }}\" | \
               .os_list.extract_size = ${IMG_SIZE} | \
               .os_list.extract_sha256 = \"${IMG_CHKS}\" | \
