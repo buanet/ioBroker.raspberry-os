@@ -1,6 +1,6 @@
 # Github action to build Raspberry Pi image from main branch
 
-name: Build ioBroker Raspberry Pi image
+name: Update rpi-imager repo
 
 on:
   workflow_dispatch:
