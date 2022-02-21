@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_main_image:
+  update_rpi-imager:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout ioBroker.raspberry-os

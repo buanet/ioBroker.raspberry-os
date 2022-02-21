@@ -38,7 +38,7 @@ jobs:
         if: steps.git-check.outputs.modified == 'true'
         uses: benc-uk/workflow-dispatch@v1.1
         with:
-          workflow: Build ioBroker Raspberry Pi image
+          workflow: Build image
           repo: buanet/ioBroker.raspberry-os
           token: ${{ secrets.ACTIONS_PAT }}
 
