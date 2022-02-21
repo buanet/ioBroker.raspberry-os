@@ -1,7 +1,7 @@
 {
   "os_list": [
     {
-      "name": "ioBroker Raspberry Pi OS v1.3.0",
+      "name": "ioBroker Raspberry Pi OS v1.3.0 (32bit)",
       "description": "Raspberry Pi OS lite (32bit) based Image for ioBroker open-source IoT platform.",
       "url": "https://github.com/buanet/ioBroker.raspberry-os/releases/download/v1.3.0/2022-02-20_RaspberryOS_ioBroker_Image_v1.3.0.zip",
       "icon": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/resources/rpi-imager/iob-icon.png",
