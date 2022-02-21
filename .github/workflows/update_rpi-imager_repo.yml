@@ -26,24 +26,26 @@ jobs:
           URL=$(curl -sL https://api.github.com/repos/buanet/ioBroker.raspberry-os/releases/latest | jq -r '.assets[].browser_download_url' | tail -n1)
           echo "Download URL: $URL"
           wget -q $URL
-          FILE_NAME=$(find ./ -name '*.zip')
-          echo "File name: $FILE_NAME"
-          DATE=2022-02-20
+          FILE_NAME_ZIP=$(find ./ -name '*.zip')
+          echo "ZIP File name: $FILE_NAME_ZIP"
+          DATE=$(find *.zip | cut -c 1-10)
           echo "Date: $DATE"
           echo 'Done.'
           echo ''
           echo 'Fetch information for download file...'
-          DL_SIZE=$(ls -l $FILE_NAME | awk '{print $5;}')
+          DL_SIZE=$(ls -l $FILE_NAME_ZIP | awk '{print $5;}')
           echo "Download size: $DL_SIZE"
-          DL_CHKS=$(sha256sum $FILE_NAME | awk '{print $1;}')
+          DL_CHKS=$(sha256sum $FILE_NAME_ZIP | awk '{print $1;}')
           echo "Download checksum: $DL_CHKS"
           echo 'Done.'
           echo ''
           echo 'Fetch information for image file...'
-          unzip $FILE_NAME -d ./
-          IMG_SIZE=$(ls -l $DATE-ioBrokerPi-lite.img | awk '{print $5;}')
+          unzip $FILE_NAME_ZIP -d ./
+          FILE_NAME_IMG=$(find ./ -name '*.img')
+          echo "IMG File name: $FILE_NAME_IMG"
+          IMG_SIZE=$(ls -l $FILE_NAME_IMG | awk '{print $5;}')
           echo "Image size: $IMG_SIZE"
-          IMG_CHKS=$(sha256sum $DATE-ioBrokerPi-lite.img | awk '{print $1;}')
+          IMG_CHKS=$(sha256sum $FILE_NAME_IMG | awk '{print $1;}')
           echo "Image checksum: $IMG_CHKS"
           echo 'Done.'
           echo ''
@@ -59,8 +61,8 @@ jobs:
           echo 'Done.'
           echo ''
           echo 'Remove downloaded files...'
-          rm $FILE_NAME
-          rm $DATE-ioBrokerPi-lite.img
+          rm $FILE_NAME_ZIP
+          rm $FILE_NAME_IMG
           echo 'Done.'
 
       - name: Check for modified files
