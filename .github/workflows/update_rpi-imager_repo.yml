@@ -48,7 +48,7 @@ jobs:
           echo 'Done.'
           echo ''
           echo 'Update rpi-imager.json...'
-          jq ".os_list[].name = \"ioBroker Raspberry Pi OS ${RELEASE_TAG}\" | \
+          jq ".os_list[].name = \"ioBroker Raspberry Pi OS ${RELEASE_TAG} (32bit)\" | \
               .os_list[].url = \"${URL}\" | \
               .os_list[].release_date = \"${DATE}\" | \
               .os_list[].extract_size = ${IMG_SIZE} | \
