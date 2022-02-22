@@ -1,6 +1,6 @@
 # Official Raspberry OS image for ioBroker
 
- <img src="https://github.com/buanet/ioBroker.raspberry-os/raw/main/src/img/iobroker_logo.png" width="600" title="ioBroker Logo">
+ <img src="https://github.com/buanet/ioBroker.raspberry-os/raw/main/doc/img/iobroker_logo.png" width="600" title="ioBroker Logo">
 
 [![Release](https://img.shields.io/github/v/release/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/releases)
 [![Github Issues](https://img.shields.io/github/issues/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/issues)<br>
