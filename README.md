@@ -1,11 +1,20 @@
-# Raspberry OS image with ioBroker
+# Official Raspberry OS image for ioBroker
+
+ <img src="https://github.com/buanet/ioBroker.raspberry-os/raw/main/src/img/iobroker_logo.png" width="600" title="ioBroker Logo">
 
 [![Release](https://img.shields.io/github/v/release/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/releases)
 [![Github Issues](https://img.shields.io/github/issues/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/issues)<br>
 [![License](https://img.shields.io/github/license/buanet/ioBroker.raspberry-os)](https://github.com/buanet/ioBroker.raspberry-os/blob/master/LICENSE.md)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue)](https://paypal.me/buanet)
 
-This repo is used to auto generate pre configured Raspberry OS images for ioBroker IoT platform. For more details about ioBroker and the download of the latest image see: [iobroker.net](https://www.iobroker.net/).
+This project is used to auto generate pre configured Raspberry OS images for ioBroker IoT platform. For more details about ioBroker see: [iobroker.net](https://www.iobroker.net/).
+
+## :rocket: Quick links
+
+Don't know what's ioBroker? :arrow_right: [iobroker.net](https://www.iobroker.net)<br>
+Don't know what's a Raspberry Pi? :arrow_right: [raspberrypi.org](https://www.raspberrypi.org/)<br>
+Looking for the image to download? :arrow_right: [see latest release](https://github.com/buanet/ioBroker.raspberry-os/releases/latest)
+
 
 This build uses the official Raspberry Pi OS build script from https://github.com/RPi-Distro/pi-gen. It takes the stages for the default lite image and adds a custom stage for setting up ioBroker.
 
