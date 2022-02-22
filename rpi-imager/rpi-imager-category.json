@@ -3,6 +3,6 @@
 {
   "name": "ioBroker",
   "description": "Official Raspberry Pi OS Image for ioBroker open-source IoT platform.",
-  "icon": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/resources/rpi-imager/iob-icon.png",
-  "subitems_url": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/resources/rpi-imager/rpi-imager.json"
+  "icon": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/rpi-imager/iob-icon.png",
+  "subitems_url": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/master/rpi-imager/rpi-imager.json"
 },
