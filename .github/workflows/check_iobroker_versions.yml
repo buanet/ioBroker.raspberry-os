@@ -1,4 +1,4 @@
-name: Check js-controller release
+name: Check ioBroker versions
 
 on:
   schedule:
@@ -14,13 +14,20 @@ jobs:
         with:
           repository: 'buanet/ioBroker.raspberry-os'
 
-      - name: Fetch js-controller release version
+      - name: Fetch ioBroker versions
         run: |
-          echo 'Fetch js-controller release version...'
           curl -sL https://repo.iobroker.live/sources-dist.json | \
           jq -r '."js-controller".version' > .github/dependencies/.js-controller-version
-          echo "Released js-controller version: $(cat .github/dependencies/.js-controller-version)"
-          echo 'Done.'
+          echo "[LOG] Fetched js-controller version is $(cat .github/dependencies/.js-controller-version)"
+          curl -sL https://repo.iobroker.live/sources-dist.json | \
+          jq -r '."admin".version' > .github/dependencies/.admin-version
+          echo "[LOG] Fetched admin version is $(cat .github/dependencies/.admin-version)"
+          curl -sL https://repo.iobroker.live/sources-dist.json | \
+          jq -r '."backitup".version' > .github/dependencies/.backitup-version
+          echo "[LOG] Fetched backitup version is $(cat .github/dependencies/.backitup-version)"
+          curl -sL https://repo.iobroker.live/sources-dist.json | \
+          jq -r '."discovery".version' > .github/dependencies/.discovery-version
+          echo "[LOG] Fetched discovery version is $(cat .github/dependencies/.discovery-version)"
 
       - name: Check for modified files
         id: git-check
@@ -31,7 +38,7 @@ jobs:
         run: |
           git config --global user.name 'buanet'
           git config --global user.email 'info@buanet.de'
-          git commit -am "new js-controller release"
+          git commit -am "new ioBroker versions"
           git push
 
       - name: Trigger image build
