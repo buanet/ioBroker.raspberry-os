@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger build (dev)
-        uses: benc-uk/workflow-dispatch@v1
+        uses: benc-uk/workflow-dispatch@v1.2
         with:
           workflow: iob.raspberry-os - Build Raspberry OS image (dev)
           repo: buanet/private.actionsrunner

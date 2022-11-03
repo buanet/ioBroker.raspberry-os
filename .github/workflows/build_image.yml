@@ -100,7 +100,7 @@ jobs:
 #          echo ''
 
       - name: Trigger update rpi-imager
-        uses: benc-uk/workflow-dispatch@v1.1
+        uses: benc-uk/workflow-dispatch@v1.2
         with:
           workflow: Update rpi-imager repo
           repo: buanet/ioBroker.raspberry-os
@@ -113,7 +113,7 @@ jobs:
     needs: [build_main_image]
     steps:
       - name: Trigger build
-        uses: benc-uk/workflow-dispatch@v1
+        uses: benc-uk/workflow-dispatch@v1.2
         with:
           workflow: Build image
           repo: buanet/ioBroker.raspberry-os
