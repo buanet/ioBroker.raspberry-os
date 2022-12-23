@@ -3,13 +3,13 @@
     {
       "name": "ioBroker Raspberry Pi OS v1.3.0 (32bit)",
       "description": "Image for ioBroker open-source IoT platform based on Raspberry Pi OS lite (32bit).",
-      "url": "https://github.com/buanet/ioBroker.raspberry-os/releases/download/v1.3.0/2022-12-16_RaspberryOS_ioBroker_Image_v1.3.0.zip",
+      "url": "https://github.com/buanet/ioBroker.raspberry-os/releases/download/v1.3.0/2022-12-22_RaspberryOS_ioBroker_Image_v1.3.0.zip",
       "icon": "https://raw.githubusercontent.com/buanet/ioBroker.raspberry-os/main/rpi-imager/iob-icon.png",
-      "release_date": "2022-12-16",
+      "release_date": "2022-12-22",
       "extract_size": 2671771648,
-      "extract_sha256": "7e896ca13aaef951b50529e34415980beb8946ea57bb84d6c722c566d127b39f",
-      "image_download_size": 778927912,
-      "image_download_sha256": "3540666770d61c67ef8721ceb4588103035674d32a6a50bfdd0402ee469470c1",
+      "extract_sha256": "505dd75108a2a91427456234a4f14b7bf593474e1c52f1a99ff9f0b872c0c41f",
+      "image_download_size": 777782619,
+      "image_download_sha256": "68d6d9520b0b9e4e1d9b53475750ddb6dbf3c4cb53d521e442cc7d7cb6f6af72",
       "website": "https://www.iobroker.net/"
     }
   ]
