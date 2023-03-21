@@ -31,10 +31,10 @@ jobs:
 
       - name: Check for modified files
         id: git-check
-        run: echo "modified=$([ -z \"`git status --porcelain`\" ] && echo \"false\" || echo \"true\")"
+        run: echo "modified=$([ -z \"`git status --porcelain`\" ] && echo \"false\" || echo \"true\")" >> $GITHUB_ENV
 
       - name: Commit latest release version
-        if: ${{ steps.git-check.outputs.modified }} == 'true'
+        if: steps.git-check.outputs.modified == 'true'
         run: |
           git config --global user.name 'buanet'
           git config --global user.email 'info@buanet.de'
@@ -42,7 +42,7 @@ jobs:
           git push
 
       - name: Trigger image build
-        if: ${{ steps.git-check.outputs.modified }} == 'true'
+        if: steps.git-check.outputs.modified == 'true'
         uses: benc-uk/workflow-dispatch@v1.2
         with:
           workflow: Build image
