@@ -24,6 +24,9 @@ jobs:
 
       - name: Prepare build
         run: |
+          echo 'Install prerequisites'
+          sudo apt-get update
+          sudo apt-get install binfmt-support
           echo 'Lock build date...'
           DATE=$(date '+%Y-%m-%d')
           echo "Build date: $DATE"
