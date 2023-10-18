@@ -1,4 +1,4 @@
-name: Check ioBroker versions
+name: Version Checks
 
 on:
   schedule:
@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.0
         with:
           repository: 'buanet/ioBroker.raspberry-os'
+          token: ${{ secrets.ACTIONS_PAT }}
 
       - name: Fetch ioBroker versions
         run: |
@@ -34,7 +35,7 @@ jobs:
 
       - name: Check for modified files
         id: git-check
-        run: echo "modified=$([ -z \"`git status --porcelain`\" ] && echo \"false\" || echo \"true\")" >> $GITHUB_ENV
+        run: echo ::set-output name=modified::$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
 
       - name: Commit latest release version
         if: steps.git-check.outputs.modified == 'true'
