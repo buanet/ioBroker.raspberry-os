@@ -22,14 +22,11 @@ jobs:
           ref: ${{ env.RELEASE_TAG }}
           path: ioBroker.raspberry-os
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Prepare build
         run: |
           echo 'Install prerequisites'
           sudo apt-get update
-          sudo apt-get install binfmt-support
+          sudo apt-get --no-install-recommends --no-install-suggests install binfmt-support qemu-user-static qemu-utils nbd-server nbd-client
           echo 'Lock build date...'
           DATE=$(date '+%Y-%m-%d')
           echo "Build date: $DATE"
