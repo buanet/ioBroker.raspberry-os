@@ -73,7 +73,7 @@ jobs:
       
           # The release version to build images against. Valid values are jessie, stretch, 
           # buster, bullseye, bookworm, and testing.
-          release: bullseye
+          release: bookworm
       
           # Setting to `1` will prevent pi-gen from dropping the "capabilities" feature. 
           # Generating the root filesystem with capabilities enabled and running it from a 
@@ -95,7 +95,7 @@ jobs:
           use-qcow2: 1
       
           # Print all output from pi-gen.
-          verbose-output: false
+          verbose-output: true
 
       - uses: actions/upload-artifact@v3
         with:
