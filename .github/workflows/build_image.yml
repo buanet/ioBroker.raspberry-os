@@ -85,39 +85,32 @@ jobs:
           echo 'Done.'
           echo ''
 
-      - name: Publish image to Github release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_name: buanet/ioBroker.raspberry-os
-          repo_token: ${{ secrets.ACTIONS_PAT }}
-          tag: ${{ env.RELEASE_TAG }}
-          file: ${{ env.IMAGE_PATH }}
-          asset_name: ${{ env.DATE }}_RaspberryOS_ioBroker_Image_${{ env.RELEASE_TAG }}.zip
-          overwrite: true
+#      - name: Publish image to Github release
+#        uses: svenstaro/upload-release-action@v2
+#        with:
+#          repo_name: buanet/ioBroker.raspberry-os
+#          repo_token: ${{ secrets.ACTIONS_PAT }}
+#          tag: ${{ env.RELEASE_TAG }}
+#          file: ${{ env.IMAGE_PATH }}
+#          asset_name: ${{ env.DATE }}_RaspberryOS_ioBroker_Image_${{ env.RELEASE_TAG }}.zip
+#          overwrite: true
 
-#      - name: Upload deploy.zip to cloud.buanet.de
-#        run: |
-#          echo 'Uploading...'
-#          curl -u ${{ secrets.NC_USER }}:${{ secrets.NC_PASS }} -T ./deploy.zip "https://${{ secrets.NC_HOST }}/remote.php/dav/files/fileshare/rpios-iobroker/${{ env.DATE }}_Deploy_RaspberryOS_ioBroker_${{ env.RELEASE_TAG }}.zip"
-#          echo 'Done.'
-#          echo ''
+#      - name: Trigger update rpi-imager
+#        uses: benc-uk/workflow-dispatch@v1.2
+#        with:
+#          workflow: Update rpi-imager repo
+#          repo: buanet/ioBroker.raspberry-os
+#          token: ${{ secrets.ACTIONS_PAT }}
 
-      - name: Trigger update rpi-imager
-        uses: benc-uk/workflow-dispatch@v1.2
-        with:
-          workflow: Update rpi-imager repo
-          repo: buanet/ioBroker.raspberry-os
-          token: ${{ secrets.ACTIONS_PAT }}
-
-  retry_when_failed:
-    name: Retry workflow when failed
-    runs-on: ubuntu-latest
-    if: failure()
-    needs: [build_main_image]
-    steps:
-      - name: Trigger build
-        uses: benc-uk/workflow-dispatch@v1.2
-        with:
-          workflow: Build image
-          repo: buanet/ioBroker.raspberry-os
-          token: ${{ secrets.ACTIONS_PAT }}
+#  retry_when_failed:
+#    name: Retry workflow when failed
+#    runs-on: ubuntu-latest
+#    if: failure()
+#    needs: [build_main_image]
+#    steps:
+#      - name: Trigger build
+#        uses: benc-uk/workflow-dispatch@v1.2
+#        with:
+#          workflow: Build image
+#          repo: buanet/ioBroker.raspberry-os
+#          token: ${{ secrets.ACTIONS_PAT }}
