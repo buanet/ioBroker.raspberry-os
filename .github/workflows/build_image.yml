@@ -26,7 +26,9 @@ jobs:
         run: |
           echo 'Install prerequisites'
           sudo apt-get update
-          sudo apt-get --no-install-recommends --no-install-suggests install binfmt-support qemu-user-static qemu-utils nbd-server nbd-client
+          sudo apt-get install binfmt-support qemu-user-static qemu-utils nbd-server nbd-client
+          modprobe binfmt_misc
+          sudo update-binfmts --enable
           echo 'Lock build date...'
           DATE=$(date '+%Y-%m-%d')
           echo "Build date: $DATE"
