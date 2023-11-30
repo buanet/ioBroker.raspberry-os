@@ -4,7 +4,6 @@
 echo "[LOG] Configuring firstboot"
 install -m 775 files/rc.local "${ROOTFS_DIR}/etc/rc.local"
 install -m 775 files/firstboot.sh "${ROOTFS_DIR}/root/firstboot.sh"
-# install -m 775 files/fix_iob_uuid.sh "${ROOTFS_DIR}/root/fix_iob_uuid.sh"
 
 on_chroot << EOF
   systemctl enable rc-local
