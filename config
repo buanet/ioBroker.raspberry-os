@@ -1,7 +1,9 @@
 # build settings
 IMG_NAME='ioBrokerPi'
+PI_GEN_RELEASE='ioBroker Pi'
+RELEASE='bookworm'
 STAGE_LIST='stage0 stage1 stage2 stage-iobroker'
-DEPLOY_ZIP=1
+DEPLOY_COMPRESSION='zip'
 
 # system default settings
 TARGET_HOSTNAME='iobroker-pi'
