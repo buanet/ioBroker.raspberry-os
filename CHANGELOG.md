@@ -1,6 +1,6 @@
 ## Changelog
 
-### v2.0.0-beta.1 (coming soon)
+### v2.0.0-beta.1 (2023-12-05)
 * add hostname check to firstboot
 * update config
 * build new ci process
