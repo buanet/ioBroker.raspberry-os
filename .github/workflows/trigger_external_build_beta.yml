@@ -17,6 +17,7 @@ jobs:
       - name: Trigger build (beta)
         uses: benc-uk/workflow-dispatch@v1.2
         with:
+          ref: refs/heads/main
           workflow: iob.raspberry-os - Build image (beta)
           repo: buanet/private.actionsrunner
           token: ${{ secrets.ACTIONS_PAT }}
