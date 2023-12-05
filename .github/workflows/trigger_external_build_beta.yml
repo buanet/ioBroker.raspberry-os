@@ -1,0 +1,22 @@
+# Due to some issues with Github action runners the build process will run on an external runner.
+# This workflow will trigger this external build process.
+name: Trigger external build (beta)
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - prereleased
+#  schedule:
+#    - cron: '0 10 1 * *'
+
+jobs:
+  trigger_beta_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger build (beta)
+        uses: benc-uk/workflow-dispatch@v1.2
+        with:
+          workflow: iob.raspberry-os - Build image (beta)
+          repo: buanet/private.actionsrunner
+          token: ${{ secrets.ACTIONS_PAT }}
