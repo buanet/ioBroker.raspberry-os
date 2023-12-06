@@ -6,12 +6,12 @@ echo '>>> Starting firstboot.sh'
 
 # resize root partion to possible maximum
 echo -n 'Resizing root partition... '
-raspi-config nonint do_expand_rootfs
+raspi-config nonint do_expand_rootfs > /root/firstboot.log
 echo 'Done.'
 
 # get current date from debian time server
 echo -n 'Updating date and time... '
-ntpdate 0.debian.pool.ntp.org
+ntpdate 0.debian.pool.ntp.org >> /root/firstboot.log
 echo 'Done.'
 
 # check/ correct hostname in iobroker
