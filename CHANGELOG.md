@@ -1,6 +1,8 @@
 ## Changelog
 
 ### v2.0.0-beta.1 (2023-12-05)
+* redesign firstboot.sh
+* enhance logging
 * add hostname check to firstboot
 * update config
 * build new ci process
