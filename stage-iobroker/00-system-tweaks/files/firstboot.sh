@@ -15,7 +15,7 @@ ntpdate 0.debian.pool.ntp.org >> /root/firstboot.log
 echo 'Done.'
 
 # check/ correct hostname in iobroker
-if [[ $(iob object get "system.adapter.admin.0" --pretty | grep -oP '(?<="host": ")[^"]*') =! $(hostname) ]]; then
+if [[ $(iob object get "system.adapter.admin.0" --pretty | grep -oP '(?<="host": ")[^"]*') != $(hostname) ]]; then
   echo -n 'Changing hostname in ioBroker... '
   sudo -u iobroker iobroker stop
   sudo -u iobroker iobroker host this
