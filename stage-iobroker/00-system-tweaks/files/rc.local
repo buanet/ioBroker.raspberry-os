@@ -7,23 +7,6 @@
 #
 # in order to enable or disable this script just change the execution bits
 
-# print the ip address on startup
-_IP=$(hostname -I) || true
-if [ "$_IP" ]; then
-  printf "My IP address is %s\n" "$_IP"
-fi
-
-# check if iobroker uuid needs to be changed 
-#if [ -e /root/iob_uuid_not_changed ]; then
-#  sleep 10
-#  # remove check file
-#  rm /root/iob_uuid_not_changed
-#  # run fix script
-#  if [ -e /root/fix_iob_uuid.sh ]; then
-#    /root/fix_iob_uuid.sh > /root/fix_iob_uuid.log 2>&1
-#  fi
-#fi
-
 # runs firstboot.sh only on verty first boot
 if [ ! -e /root/firstboot_done ]; then
   touch /root/firstboot_done
@@ -31,6 +14,12 @@ if [ ! -e /root/firstboot_done ]; then
   if [ -e /root/firstboot.sh ]; then
     /root/firstboot.sh
   fi
+fi
+
+# print the ip address on startup
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  echo -e "\u25CF \u25CF \u25CF My IP address: $_IP \u25CF \u25CF \u25CF"
 fi
 
 exit 0
