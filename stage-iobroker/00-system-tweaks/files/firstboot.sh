@@ -2,25 +2,27 @@
 # this script will run the first time the raspberry pi boots.
 # it runs as root.
 
-echo '>>> Starting firstboot.sh'
+echo "         Starting firstboot.sh..."
 
 # resize root partion to possible maximum
-echo -n 'Resizing root partition... '
+echo "         Starting resizing root partition..."
 raspi-config nonint do_expand_rootfs > /root/firstboot.log
-echo 'Done.'
+echo -e "[\033[32m  OK  \033[0m] Finished resizing root partition."
 
 # get current date from debian time server
-echo -n 'Updating date and time... '
+echo "         Starting date and time update..."
 ntpdate 0.debian.pool.ntp.org >> /root/firstboot.log
-echo 'Done.'
+echo -e "[\033[32m  OK  \033[0m] Finished date and time update."
 
 # check/ correct hostname in iobroker
 if [[ $(iob object get "system.adapter.admin.0" --pretty | grep -oP '(?<="host": ")[^"]*') != $(hostname) ]]; then
-  echo -n 'Changing hostname in ioBroker... '
+  echo "         Starting hostname update in iobroker..."
   sudo -u iobroker iobroker stop
   sudo -u iobroker iobroker host this
-  echo 'Done.'
+  echo -e "[\033[32m  OK  \033[0m] Finished hostname update in iobroker."
 fi
+
+echo -e "[\033[32m  OK  \033[0m] Finished firstboot.sh."
 
 # Reboot
 echo 'Rebooting...'
