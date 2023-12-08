@@ -19,7 +19,7 @@ fi
 # print the ip address on startup
 _IP=$(hostname -I) || true
 if [ "$_IP" ]; then
-  echo -e "\u25CF \u25CF \u25CF My IP address: $_IP \u25CF \u25CF \u25CF"
+  echo "My IP address: $_IP"
 fi
 
 exit 0
